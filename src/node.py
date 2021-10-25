@@ -4,8 +4,9 @@ class Node:
         self.pebble = pebble
     
     def __str__(self):
-        return str(self.portIn)
-
+        ret = str(self.portIn) + '\n' + self.pebble
+        return ret
+    
     def __repr__(self):
         return str(self.portIn)
 

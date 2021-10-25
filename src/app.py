@@ -3,6 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import agent as Agent
 import node as Node
+import layout as Layout
 
 graph = nx.Graph()
 agent = Agent.Agent()
@@ -22,4 +23,8 @@ for i in range(10,0,-1):
 agent.visit_neighbours(graph)
 print(agent.code)
 print(agent.to_port_number())
+
+pos = Layout.hierarchy_pos(graph, agent)
+nx.draw_networkx(graph, pos=pos)
+plt.show()
 
