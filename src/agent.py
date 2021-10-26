@@ -21,11 +21,22 @@ class Agent:
         print(self.code, 'is stripped to', decoded)
         return int(decoded,2)
 
-    def visit_neighbours(self, g):
+    def visit_neighbours(self, g, after_visit=None):
         for n in bfs.bfs_edges(g, self, depth_limit=1, sort_neighbors=lambda nodes: sorted(nodes)):
+            
+            n[1].is_agent_here = True
             self.append_code(n[1].pebble)
+
+            if callable(after_visit):
+                after_visit(g, self, self.__get_state())
+
+            n[1].is_agent_here = False
+
             if (self.is_code_ended()):
                 break
+
+    def __get_state(self):
+        return 'encoded: ' + self.code + ', finished: ' + str(self.is_code_ended()) + ((', decoded: ' + str(self.to_port_number())) if self.is_code_ended() else '')
 
     def __str__(self):
         return self.name

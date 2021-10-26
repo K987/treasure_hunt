@@ -28,6 +28,6 @@ def create_graph(child_count, pebbles = []) -> Tuple[nx.Graph, a.Agent, List[n.N
 
 graph, agent, neighbours = create_graph(10, [1,1])
 
-neighbours[0].is_agent_here = True
+draw = d.Drawer(0)
 
-d.show_graph(graph, agent, neighbours)
+agent.visit_neighbours(graph, after_visit=draw.show_graph)
