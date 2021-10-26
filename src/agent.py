@@ -6,12 +6,6 @@ class Agent:
         self.name = 'agent'
         self.code = ''
 
-    def __str__(self):
-        return self.name
-
-    def append_code(self, pebble):
-        self.code = pebble + self.code
-
     def is_code_ended(self) -> bool:
         return len(self.code) > 2 and self.code.startswith('00')
 
@@ -25,21 +19,21 @@ class Agent:
         for n in bfs.bfs_edges(g, self, depth_limit=1, sort_neighbors=lambda nodes: sorted(nodes)):
             
             n[1].is_agent_here = True
-            self.append_code(n[1].pebble)
+            self.__append_code(n[1].pebble)
 
             if callable(after_visit):
-                after_visit(g, self, self.__get_state())
+                after_visit(g, self)
 
             n[1].is_agent_here = False
 
             if (self.is_code_ended()):
                 break
 
-    def __get_state(self):
-        return 'encoded: ' + self.code + ', finished: ' + str(self.is_code_ended()) + ((', decoded: ' + str(self.to_port_number())) if self.is_code_ended() else '')
-
     def __str__(self):
         return self.name
 
     def __repr__(self):
         return self.name
+    
+    def __append_code(self, pebble):
+        self.code = pebble + self.code
