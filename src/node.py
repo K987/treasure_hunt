@@ -1,14 +1,14 @@
 class Node:
     def __init__(self, port_in: int, pebble='0'):
-        self.portIn = port_in
+        self.port_in = port_in
         self.pebble = pebble
+        self.is_agent_there = 
     
     def __str__(self):
-        ret = str(self.portIn) + '\n' + self.pebble
-        return ret
+        return self.pebble
     
     def __repr__(self):
-        return str(self.portIn)
+        return self.__str__()
 
     def __lt__(self, other):
-        return self.portIn < other.portIn
+        return self.port_in < other.port_in
