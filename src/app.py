@@ -4,6 +4,7 @@ from networkx.classes.reportviews import EdgeDataView
 import agent as a
 import node as n
 import draw as d
+import graphs as g
 from typing import List
 from typing import Tuple
 
@@ -26,7 +27,7 @@ def create_graph(child_count, pebbles = []) -> Tuple[nx.Graph, a.Agent, List[n.N
         graph.add_edge(agent, node, port_in=i)
     return graph, agent, nodes
 
-graph, agent, neighbours = create_graph(10, [1,1])
+graph, agent, end, neighbours = g.graph_2() # create_graph(10, [1,1])
 
 draw = d.Drawer(0)
 
