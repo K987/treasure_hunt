@@ -15,7 +15,7 @@ def encode_data(data):
   return nd; 
 
 def encode_int(number):
-  return str(bin(number)).rjust(4, '0')
+  return str(bin(number)[2:]).rjust(4, '0')
 
 
 def add_children(graph, parent, pebbles, child_count = None):
@@ -34,7 +34,7 @@ def add_children(graph, parent, pebbles, child_count = None):
 
 def graph_1():
   graph = nx.Graph()
-  start = a.Agent()
+  start = n.Node(0, '0')
 
   L1 = add_children(graph, start, 
     "11" # first node is a milestone
@@ -56,7 +56,7 @@ def graph_1():
 
 def graph_2():
   graph = nx.Graph()
-  start = a.Agent()
+  start = n.Node(0, '0')
 
   L1 = add_children(graph, start, '10', 7) # first milestone is 1 step away from start node (node with max degree)
   

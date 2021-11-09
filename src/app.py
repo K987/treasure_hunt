@@ -27,8 +27,11 @@ def create_graph(child_count, pebbles = []) -> Tuple[nx.Graph, a.Agent, List[n.N
         graph.add_edge(agent, node, port_in=i)
     return graph, agent, nodes
 
-graph, agent, end, neighbours = g.graph_2() # create_graph(10, [1,1])
+graph, start, end, neighbours = g.graph_2() 
+agent = a.Agent(graph, start, end)
 
-draw = d.Drawer(0)
+# graph, agent, end = create_graph(10, [1,1])
 
-agent.visit_neighbours(graph, after_visit=draw.show_graph)
+draw = d.Drawer(0.25)
+
+agent.traverse(after_visit=draw.show_graph)
