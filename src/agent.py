@@ -143,8 +143,6 @@ class Agent:
         code = self.read_neighbours(skip_count, skip_count+2, after_visit)
         if code == '11': return 3
         else: return 4
-
-
         
 
     def __str__(self):
