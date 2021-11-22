@@ -5,6 +5,7 @@ from typing import List
 class Agent:
 
     def __init__(self, graph, start_node, destination_node):
+        self.step_count = 0
         self.name = 'agent'
         self.code = ''
         # the entry point of the graph
@@ -26,6 +27,7 @@ class Agent:
         self.current_node.is_agent_here = False
         self.current_node = new_node
         self.current_node.is_agent_here = True
+        self.step_count += 1
 
     def list_neighbours(self):
         return list(bfs.bfs_edges(self.graph, self.current_node, depth_limit=1, sort_neighbors=lambda nodes: sorted(nodes)))    
@@ -41,6 +43,7 @@ class Agent:
         max_node = None
         
         for n in self.list_neighbours():
+            self.step_count +1
             deg = self.graph.degree[n[1]]
             if (deg > max):
                 max = deg
@@ -144,6 +147,9 @@ class Agent:
         if code == '11': return 3
         else: return 4
         
+
+    def get_step_count(self):
+        return self.step_count
 
     def __str__(self):
         return self.name
