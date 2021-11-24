@@ -37,8 +37,8 @@ draw = d.Drawer(speed)
 #agent.traverse(after_visit=draw.show_graph)
 #agent.traverse()
 
-s.simulate()
-size, diameter, path_distance, milestone_distance, milestone_count, milestone_count, steps, steps_dfs = s.load()
+#s.simulate()
+size, diameter, path_distance, milestone_distance, milestone_count, steps, steps_dfs = s.load()
 
 
 xs, ys = zip(*sorted(zip(path_distance, steps)))
