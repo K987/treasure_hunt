@@ -50,8 +50,8 @@ def simulate():
             steps.append(agent1.step_count)
             steps_dfs.append(agent2.step_count)
     
-    np.save("simulation.npy", (size, diameter, path_distance, milestone_distance, milestone_count, milestone_count, steps, steps_dfs))
-    return size, diameter, path_distance, milestone_distance, milestone_count, milestone_count, steps, steps_dfs
+    np.save("simulation.npy", (size, diameter, path_distance, milestone_distance, milestone_count, steps, steps_dfs))
+    return size, diameter, path_distance, milestone_distance, milestone_count, steps, steps_dfs
 
 def load():
     return np.load("simulation.npy")
