@@ -86,8 +86,24 @@ class Agent:
             after_visit(self.graph, self)
             after_visit(self.graph, self)
 
-        if self.current_node != self.destination_node:
-            raise RuntimeError("nem ért célba")
+        
+        while(self.current_node != self.destination_node):
+            case = self.choose_case(1, after_visit)
+            print('Looking for a path of length:', case)
+            codes = self.visit_neighbours(case, 3, after_visit)
+
+            print('following path:', codes)
+
+            for port in codes:
+                self.move_to(self.get_neighbour(port + 1))
+                if callable(after_visit):
+                    after_visit(self.graph, self)
+            
+            if callable(after_visit):
+                after_visit(self.graph, self)
+                after_visit(self.graph, self)
+
+
 
     def get_neighbour(self, index):
         nodes = self.list_neighbours()
@@ -145,7 +161,9 @@ class Agent:
     def choose_case(self, skip_count, after_visit) -> int:
         code = self.read_neighbours(skip_count, skip_count+2, after_visit)
         if code == '11': return 3
-        else: return 4
+        if code == '10': return 4
+        if code == '01': return 5
+        else: return 6
         
 
     def get_step_count(self):

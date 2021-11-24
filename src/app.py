@@ -14,17 +14,18 @@ start = None
 end = None
 neighbours = None
 
-if (sys.argv[1] == '1'):
-    graph, start, end, neighbours = g.graph_1() 
+if (len(sys.argv) == 1 or sys.argv[1] == '1'):
+    graph, start, end, neighbours = g.generate(start=[g.start_1], path=[g.path_3], count=10)
 else: 
-    graph, start, end, neighbours = g.graph_2() 
+    graph, start, end, neighbours = g.start_2() 
 
 agent = a.Agent(graph, start, end)
 
 # graph, agent, end = create_graph(10, [1,1])
 
-speed = float(sys.argv[2])
+speed = 1 if len(sys.argv) < 3 else float(sys.argv[2])
 
 draw = d.Drawer(speed)
 
-agent.traverse(after_visit=draw.show_graph)
+# agent.traverse(after_visit=draw.show_graph)
+agent.traverse()
