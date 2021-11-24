@@ -16,12 +16,13 @@ end = None
 neighbours = None
 
 if (len(sys.argv) == 1 or sys.argv[1] == '1'):
-    graph, start, end, neighbours = g.generate(start=[g.start_1], path=[g.path_3], count=1)
+    graph, start, end, neighbours = g.generate(start=[g.start_1], path=[g.path_3], count=3)
+    g.populate(graph, neighbours, 0)
 else: 
     graph, start, end, neighbours = g.start_2() 
 
 agent = a.Agent(graph, start, end)
-agent = adfs.AgentDfs(graph, start, end)
+#agent = adfs.AgentDfs(graph, start, end)
 
 # graph, agent, end = create_graph(10, [1,1])
 

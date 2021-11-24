@@ -35,7 +35,7 @@ def add_children(graph, parent, pebbles, child_count = None):
 
 def start_1():
   graph = nx.Graph()
-  start = n.Node(0, '0')
+  start = n.Node(0, '0', is_path_node=True)
 
   L1 = add_children(graph, start, 
     "11" # first node is a milestone
@@ -48,6 +48,10 @@ def start_1():
   L2 = add_children( graph, L1[10], '', 5)
   L3 = add_children( graph, L2[3], '', 8)
 
+  L1[10].is_path_node = True
+  L2[3].is_path_node = True
+  L3[7].is_path_node = True
+
   end= L3[7]
   nodes = L1+L2+L3
 
@@ -55,7 +59,7 @@ def start_1():
 
 def start_2():
   graph = nx.Graph()
-  start = n.Node(0, '0')
+  start = n.Node(0, '0', is_path_node = True)
 
   L1 = add_children(graph, start, '10', 7) # first milestone is 1 step away from start node (node with max degree)
   
@@ -71,6 +75,12 @@ def start_2():
   L2 = add_children( graph, L1[5], '', 5)
   L3 = add_children( graph, L2[3], '', 8)
   L4 = add_children( graph, L3[7], '', 4)
+
+  
+  L1[5].is_path_node = True
+  L2[3].is_path_node = True
+  L3[7].is_path_node = True
+  L4[2].is_path_node = True
 
   end= L4[2]
 
@@ -91,6 +101,11 @@ def path_1(graph, start):
   L2 = add_children( graph, L1[10], '', 5)
   L3 = add_children( graph, L2[3], '', 8)
 
+  
+  L1[10].is_path_node = True
+  L2[3].is_path_node = True
+  L3[7].is_path_node = True
+
   end= L3[7]
   nodes = L1+L2+L3
 
@@ -109,6 +124,12 @@ def path_2(graph, start):
   L2 = add_children( graph, L1[5], '', 5)
   L3 = add_children( graph, L2[3], '', 8)
   L4 = add_children( graph, L3[7], '', 4)
+
+
+  L1[5].is_path_node = True
+  L2[3].is_path_node = True
+  L3[7].is_path_node = True
+  L4[2].is_path_node = True
 
   end= L4[2]
   nodes = L1+L2+L3+L4
@@ -131,6 +152,13 @@ def path_3(graph, start):
   L4 = add_children( graph, L3[9], '', 4)
   L5 = add_children( graph, L4[2], '', 8)
 
+  
+  L1[2].is_path_node = True
+  L2[3].is_path_node = True
+  L3[9].is_path_node = True
+  L4[2].is_path_node = True
+  L5[1].is_path_node = True
+
   end= L5[1]
   nodes = L1+L2+L3+L4+L5
 
@@ -146,4 +174,17 @@ def generate(start, path, count):
     nodes += new_nodes
 
   return graph, graph_start, end, nodes
+
+def populate(graph, nodes, count):
+  nodes = [node for node in nodes if not node.is_path_node]
+  paths = [path_1, path_2, path_3]
+
+  for _ in range(count):
+    node = nodes[random.randrange(0, len(nodes))]
+    _, new_nodes = paths[random.randrange(0, len(paths))](graph, node)
+    for node in new_nodes:
+      node.pebble='0'
+      node.is_path_node = False
+    nodes = nodes + new_nodes
+
 
