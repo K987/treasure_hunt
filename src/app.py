@@ -6,9 +6,13 @@ import agent_dfs as adfs
 import node as n
 import draw as d
 import graphs as g
+import simulations as s
 from typing import List
 from typing import Tuple
 import sys
+
+import matplotlib.pyplot as plt
+
 
 graph = None
 start = None
@@ -30,5 +34,14 @@ speed = 1 if len(sys.argv) < 3 else float(sys.argv[2])
 
 draw = d.Drawer(speed)
 
-agent.traverse(after_visit=draw.show_graph)
+#agent.traverse(after_visit=draw.show_graph)
 #agent.traverse()
+
+s.simulate()
+size, diameter, path_distance, milestone_distance, milestone_count, milestone_count, steps, steps_dfs = s.load()
+
+
+xs, ys = zip(*sorted(zip(path_distance, steps)))
+plt.plot(xs, ys)
+plt.ylabel('steps by size')
+plt.show()

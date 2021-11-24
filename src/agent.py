@@ -4,7 +4,7 @@ from typing import List
 
 class Agent:
 
-    def __init__(self, graph, start_node, destination_node):
+    def __init__(self, graph, start_node, destination_node, simulation_mode = False):
         self.step_count = 0
         self.name = 'agent'
         self.code = ''
@@ -16,11 +16,12 @@ class Agent:
         self.destination_node = destination_node
         # The graph 
         self.graph = graph
+        self.simulation_mode = simulation_mode
         
 
     def to_port_number(self, code) -> int:
         decoded = code[1:len(code)-2:2]
-        print(code, 'is stripped to', decoded, '=', int(decoded,2))
+        if not self.simulation_mode: print(code, 'is stripped to', decoded, '=', int(decoded,2))
         return int(decoded,2)
 
     def move_to(self, new_node): 
@@ -36,7 +37,7 @@ class Agent:
         code = self.read_neighbours(0, 2, after_visit)
 
         if code == '11': 
-            print('start node is a milestone')
+            if not self.simulation_mode: print('start node is a milestone')
             return
 
         max = 0
@@ -49,7 +50,7 @@ class Agent:
                 max = deg
                 max_node = n
 
-        print('moving to node:', max_node[1])        
+        if not self.simulation_mode: print('moving to node:', max_node[1])        
         self.move_to(max_node[1])
 
 
@@ -61,11 +62,11 @@ class Agent:
 
         case = self.choose_case(skip_count, after_visit)
 
-        print('Looking for a path of length:', case)
+        if not self.simulation_mode: print('Looking for a path of length:', case)
 
         codes = self.visit_neighbours(case, skip_count + 2, after_visit)
 
-        print('following path:', codes)
+        if not self.simulation_mode: print('following path:', codes)
 
         if self.current_node is not self.start_node:
             self.move_to(self.start_node)
@@ -89,10 +90,10 @@ class Agent:
         
         while(self.current_node != self.destination_node):
             case = self.choose_case(1, after_visit)
-            print('Looking for a path of length:', case)
+            if not self.simulation_mode: print('Looking for a path of length:', case)
             codes = self.visit_neighbours(case, 3, after_visit)
 
-            print('following path:', codes)
+            if not self.simulation_mode: print('following path:', codes)
 
             for port in codes:
                 self.move_to(self.get_neighbour(port + 1))
@@ -131,6 +132,8 @@ class Agent:
 
             if code.endswith("00") and len(code) % 2 == 0:
                 # decode, add to codes
+                if(len(code) == 2): 
+                    raise MemoryError()
                 codes.append(self.to_port_number(code))
                 code = ''
             

@@ -63,6 +63,8 @@ def start_2():
 
   L1 = add_children(graph, start, '10', 7) # first milestone is 1 step away from start node (node with max degree)
   
+  for node in L1: node.is_path_node = True
+  
   milestone = L1[3]
   m1 = add_children(graph, milestone, 
     "10" # next milestone is in 4 step distance
