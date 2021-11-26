@@ -7,6 +7,7 @@ import node as n
 import draw as d
 import graphs as g
 import simulations as s
+import plot as p
 from typing import List
 from typing import Tuple
 import sys
@@ -41,7 +42,4 @@ draw = d.Drawer(speed)
 size, diameter, path_distance, milestone_distance, milestone_count, steps, steps_dfs = s.load()
 
 
-xs, ys = zip(*sorted(zip(path_distance, steps)))
-plt.plot(xs, ys)
-plt.ylabel('steps by size')
-plt.show()
+p.process_results(size, diameter, path_distance, milestone_distance, milestone_count, steps, steps_dfs)
