@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def init_plot():
     fig, axs = plt.subplots(2, 3) # 2 rows, 3 cols
@@ -8,7 +9,8 @@ def init_plot():
     axs[0, 1].set(xlabel = 'graph diameter')
     axs[0, 2].set(xlabel = 'path distance')
     axs[1, 0].set(xlabel = 'milestone distance')
-    axs[1, 1].set(xlabel = 'milestone count')
+    #axs[1, 1].set(xlabel = 'milestone count')
+    axs[1, 1].set(xlabel = 'milestone distance')
 
     return fig, axs
 
@@ -28,11 +30,17 @@ def process_results(size, diameter, path_distance, milestone_distance, milestone
     axs[1, 0].scatter(milestone_distance, steps, color='blue', label='pbg')
     axs[1, 0].scatter(milestone_distance, steps_dfs, color='red', label='dfs')
 
-    axs[1, 1].scatter(milestone_count, steps, color='blue', label='pbg')
-    axs[1, 1].scatter(milestone_count, steps_dfs, color='red', label='dfs')
+    # axs[1, 1].scatter(milestone_count, steps, color='blue', label='pbg')
+    # axs[1, 1].scatter(milestone_count, steps_dfs, color='red', label='dfs')
+
+    axs[1, 1].scatter(milestone_distance, np.array(steps) / np.array(path_distance), color='blue', label='pbg')
+    axs[1, 1].scatter(milestone_distance,  np.array(steps_dfs) / np.array(path_distance), color='red', label='dfs')
 
     for ax in axs.flat:
         ax.set(ylabel='setps')
         ax.legend(loc='best')
+
+        
+    axs[1, 1].set(ylabel='setps per distance')
 
     plt.show()
